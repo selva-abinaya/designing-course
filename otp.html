@@ -1,0 +1,32 @@
+function sendOTP() {
+    const email = document.getElementById("email").value;
+    const otpverify = document.getElementsByClassName("email-verify")[0];
+    let otp_code = Math.floor(Math.random() * 10000);
+    let emailbody = '<h1>Your OTP is ' + otp_code + '</h1>'; // Removed unnecessary space before OTP
+    Email.send({
+        SecureToken: "248b71ad-75d6-4e77-93b6-c1b83d5522c5",
+        To: email,
+        From: "ramanadevi26s@gmail.com",
+        Subject: "Email OTP using JavaScript",
+        Body: emailbody,
+    }).then(message => {
+        if (message === "OK") {
+            alert("OTP sent to your email: " + email);
+            otpverify.style.display = "flex";
+            let otp_inp = document.getElementById("otp-input");
+            let otp_btn = document.getElementById("btn-verify-otp");
+            otp_btn.addEventListener("click", () => {
+                if (otp_inp.value === otp_code.toString()) { // Converted otp_code to string for comparison
+                    alert("Email address verified...");
+                    otpverify.style.display = "none";
+                    document.getElementById("email").value = "";
+                    otp_inp.value = "";
+                } else {
+                    alert("Invalid OTP");
+                }
+            });
+        }
+    });
+}
+
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="ot.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email OTP Verification</title>
+</head>
+<body>
+    <input type="email" id="email" placeholder="Enter your email">
+    <button onclick="sendOTP()">Send OTP</button>
+    <div class="email-verify" style="display: none;">
+        <input type="text" id="otp-input" placeholder="Enter OTP">
+        <button id="btn-verify-otp">Verify OTP</button>
+    </div>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+        function sendOTP() {
+            const email = document.getElementById("email").value;
+            const otpverify = document.querySelector(".email-verify");
+            let otp_code = Math.floor(Math.random() * 10000);
+            let emailbody = '<h1>Your OTP is ' + otp_code + '</h1>';
+            Email.send({
+                SecureToken: "248b71ad-75d6-4e77-93b6-c1b83d5522c5",
+                To: email,
+                From: "ramanadevi26s@gmail.com",
+                Subject: "Email OTP using JavaScript",
+                Body: emailbody,
+            }).then(message => {
+                if (message === "OK") {
+                    alert("OTP sent to your email: " + email);
+                    otpverify.style.display = "block";
+                    let otp_inp = document.getElementById("otp-input");
+                    let otp_btn = document.getElementById("btn-verify-otp");
+                    otp_btn.addEventListener("click", () => {
+                        if (otp_inp.value === otp_code.toString()) {
+                            alert("Email address verified...");
+                            otpverify.style.display = "none";
+                            document.getElementById("email").value = "";
+                            otp_inp.value = "";
+                        } else {
+                            alert("Invalid OTP");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
