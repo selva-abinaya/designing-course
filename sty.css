@@ -234,6 +234,12 @@ section{
     color:pink;
     font-size: 25px;
     background-size: cover;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
        
 }
 #SAMPLE{
